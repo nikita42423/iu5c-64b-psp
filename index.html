@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Базовая структура: шапка, контент, подвал</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Шапка (navbar) -->
+        <header class="navbar">
+            <div class="logo">Базовый макет</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="calculator.html">Калькулятор</a></li>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Услуги</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Основной контент — занимает весь оставшийся экран -->
+        <main class="content gradient-block">
+            <h1>✦ Контент ✦</h1>
+        </main>
+
+        <!-- Подвал (footer) -->
+        <footer class="footer">
+            <span>© 2026 · Кузнецов Н. В. ИУ5Ц-64Б · Чистый HTML/CSS</span>
+        </footer>
+    </div>
+
+    <!-- 
+        Всё просто:
+        - page-wrapper (flex column) занимает 100vh,
+        - шапка и подвал фиксированной высоты (зависят от контента),
+        - контент получает flex: 1 и заполняет остаток.
+        При маленьком контенте подвал прижат внизу.
+    -->
+</body>
+</html>

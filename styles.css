@@ -1,0 +1,119 @@
+/* Сброс отступов и высоты для всего документа */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;          /* Растягиваем на всю высоту окна */
+    font-family: "Inter", Arial, sans-serif;
+    background-color: #f8fafc;
+}
+
+/* Основной контейнер — флекс-колонка на всю высоту */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;      /* всегда минимум на весь экран */
+}
+
+/* Шапка (navbar) */
+.navbar {
+    background-color: #ffffff;
+    color: #0f172a;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #334155;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Контент — занимает всё свободное пространство */
+.content {
+    flex: 1;                /* главное: растягивается, заполняя экран */
+    background-color: #ffffff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* пример: контент по центру, но можно убрать */
+    align-items: center;
+    text-align: center;
+    border: 2px dashed #cbd5e1;  /* пунктир только чтобы наглядно видеть границу */
+    margin: 0.5rem;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #f1f5f9 0%, #ffffff 100%);
+}
+
+.gradient-block {
+    background-image: radial-gradient(circle at 102% -2%, hsl(308.5713824104, 58%, 93%) 7%, transparent 40.8424350929%), radial-gradient(circle at 7% 81%, hsla(212.3684210526, 83%, 83%, 0.43) 16%, transparent 53%), radial-gradient(circle at 39% 52%, hsla(168.2772647633, 73%, 89%, 0.5) 6%, transparent 68%), radial-gradient(circle at 11% 29%, hsl(201, 0%, 100%) 8%, transparent 74%), radial-gradient(circle at 90% 50%, hsl(62.3949118222, 49%, 91%) 2%, transparent 85%);
+}
+
+.content h1 {
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
+    color: #0f172a;
+    margin-bottom: 1rem;
+}
+
+.content p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    color: #334155;
+}
+
+/* Подвал (footer) */
+.footer {
+    background-color: #ffffff;
+    color: #0f172a;
+    text-align: center;
+    padding: 1.2rem;
+    font-size: 1rem;
+}
+
+.footer a {
+    color: #bae6fd;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Для совсем маленьких экранов меню может стать колонкой */
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

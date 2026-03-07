@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Подключаем шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: "Inter", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Контейнер калькулятора */
+        .calculator-container {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 20px 35px -8px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 360px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* Стили для экрана результата - в стиле основного дизайна */
+        .result {
+            background: linear-gradient(145deg, #f1f5f9 0%, #ffffff 100%);
+            border: 2px dashed #cbd5e1;
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            margin-bottom: 24px;
+            font-size: 3rem;
+            font-weight: 600;
+            text-align: right;
+            color: #0f172a;
+            font-family: "Inter", Arial, sans-serif;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            word-break: break-word;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+        }
+        
+        /* Стили для кнопок */
+        .my-btn {
+            background-color: #ffffff;
+            color: #0f172a;
+            font-family: "Inter", Arial, sans-serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            padding: 1rem 0;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            width: 100%;
+        }
+        
+        .my-btn:hover {
+            background-color: #f1f5f9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .my-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        
+        /* Вторичные кнопки (операции) */
+        .my-btn.secondary {
+            background-color: #f1f5f9;
+            color: #334155;
+            border-color: #cbd5e1;
+        }
+        
+        .my-btn.secondary:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+        
+        /* Основные кнопки операций - цвет #2d67f6 */
+        .my-btn.primary {
+            background-color: #2d67f6;
+            color: white;
+            border-color: #2d67f6;
+            font-weight: 600;
+        }
+        
+        .my-btn.primary:hover {
+            background-color: #1a4fc9;
+            border-color: #1a4fc9;
+        }
+        
+        /* Кнопка "равно" */
+        .my-btn.execute {
+            background-color: #2d67f6;
+            color: white;
+            border-color: #2d67f6;
+        }
+        
+        .my-btn.execute:hover {
+            background-color: #1a4fc9;
+        }
+        
+        /* Сетка кнопок */
+        .calculator-container > div:last-child {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .calculator-container > div:last-child > div {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        /* Последний ряд с тремя кнопками */
+        .calculator-container > div:last-child > div:last-child {
+            grid-template-columns: 1fr 1fr 2fr;
+        }
+        
+        /* Кнопка 0 - чуть шире */
+        #btn_digit_0 {
+            grid-column: span 1;
+        }
+        
+        /* Стили для ссылки назад */
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .back-link a {
+            color: #2d67f6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .back-link a:hover {
+            color: #1a4fc9;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <!-- Кнопка назад на главную -->
+        <div class="back-link">
+            <a href="index.html">← На главную</a>
+        </div>
+        
+        <!-- блок с экраном калькулятора, где будет выводиться результат вычислений. -->
+        <div id="result" class="result">
+            0
+        </div>
+
+        <!-- блок с кнопками калькулятора. -->
+        <div>
+            <!--горизонтальный ряд из четырех кнопок-->
+            <div>
+                <button id="btn_op_clear" class="my-btn secondary">C</button>
+                <button id="btn_op_sign" class="my-btn secondary">+/-</button>
+                <button id="btn_op_percent" class="my-btn secondary">%</button>
+                <button id="btn_op_div" class="my-btn primary">/</button>
+            </div>
+
+            <div>
+                <button id="btn_digit_7" class="my-btn">7</button>
+                <button id="btn_digit_8" class="my-btn">8</button>
+                <button id="btn_digit_9" class="my-btn">9</button>
+                <button id="btn_op_mult" class="my-btn primary">×</button>
+            </div>
+
+            <div>
+                <button id="btn_digit_4" class="my-btn">4</button>
+                <button id="btn_digit_5" class="my-btn">5</button>
+                <button id="btn_digit_6" class="my-btn">6</button>
+                <button id="btn_op_minus" class="my-btn primary">−</button>
+            </div>
+
+            <div>
+                <button id="btn_digit_1" class="my-btn">1</button>
+                <button id="btn_digit_2" class="my-btn">2</button>
+                <button id="btn_digit_3" class="my-btn">3</button>
+                <button id="btn_op_plus" class="my-btn primary">+</button>
+            </div>
+
+            <div>
+                <button id="btn_digit_0" class="my-btn">0</button>
+                <button id="btn_digit_dot" class="my-btn">.</button>
+                <button id="btn_op_equal" class="my-btn primary execute">=</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
