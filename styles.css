@@ -26,6 +26,12 @@ h2 {
     margin-bottom: 0.5rem;
 }
 
+.buttons-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
 /* Строчный элемент */
 span {
     font-size: 18px;
@@ -284,6 +290,12 @@ nav {
     background-color: #1d4ed8;
 }
 
+.my-btn.site {
+    width: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .calculator-container .buttons {
     display: flex;
     flex-direction: column;
@@ -293,14 +305,14 @@ nav {
 /* Ряды кнопок */
 .calculator-container .buttons-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 8px;
 }
 
-/* Первый ряд */
+/* Первый ряд
 .calculator-container .buttons-row:first-child {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
+} */
 
 /* Последний ряд (с кнопкой = шире) */
 .calculator-container .buttons-row:last-child {

@@ -18,6 +18,17 @@ window.onload = function(){
                 // здесь у нас происходит складывание сохраненного уже числа и нажатой цифры. Оба поля string, поэтому
                 // каждый раз цифра записывается в конец строки. Например: a = '14', digit = '5',
                 // a += digit - это короткая запись a = a + digit - поэтомоу после этой операции a = '145'
+
+                // Запрещаем лидирующие нули
+                if (a === '0' && digit === '0' || a === '' && digit === '0') {
+                    return
+                }
+
+                // Максимум 8 символов
+                if (a.length >= 8) {
+                    alert('Максимум 8 символов');
+                    return;
+                }
                 a += digit;
             }
             outputElement.innerHTML = a;
@@ -25,6 +36,17 @@ window.onload = function(){
         // Если операция выбрана, работаем со вторым числом (b)
         else {
             if ((digit != '.') || (digit == '.' && !b.includes(digit))) {
+
+                // Запрещаем лидирующие нули
+                if (b === '0' && digit === '0' || b === '' && digit === '0') {
+                    return
+                }
+
+                // Максимум 8 символов
+                if (b.length >= 8) {
+                    alert('Максимум 8 символов');
+                    return;
+                }
                 b += digit;
                 outputElement.innerHTML = b;
             }
@@ -65,6 +87,7 @@ window.onload = function(){
         selectedOperation = ''
         expressionResult = ''
         outputElement.innerHTML = 0
+        document.querySelector('.result').style.backgroundColor = '';
     }
 
     // Вычисляем результат при нажатии на = (вешаем обработчик события click на кнопку =)
@@ -99,7 +122,14 @@ window.onload = function(){
         selectedOperation = null
 
         // Показываем результат на экране
+        a = (+a).toFixed(8)
+        a = +a
+        a = a.toString()
         outputElement.innerHTML = a
+
+        // Разноцветным после результата
+        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+        document.querySelector('.result').style.backgroundColor = randomColor;
     }
 
     // Смена знака
@@ -130,6 +160,8 @@ window.onload = function(){
         else {
             if (b != '') {
                 b = (+b) / 100
+                b = (+b).toFixed(8)
+                b = +b
                 b = b.toString()
                 outputElement.innerHTML = b
             }
@@ -175,4 +207,64 @@ window.onload = function(){
         calculator.style.background = nextColor[currentColor];
     }
 
+    // Квадратный корень
+    document.getElementById("btn_op_sqrt").onclick = function() {
+        if (!selectedOperation) {
+            if (a != '') {
+                a = Math.sqrt((+a))
+                a = a.toString()
+                outputElement.innerHTML = a
+            }
+        }
+        else {
+            if (b != '') {
+                b = Math.sqrt((+b))
+                b = b.toString()
+                outputElement.innerHTML = b
+            }
+        }
+    }
+
+    // Возведение числа в степень 2
+    document.getElementById("btn_op_pow").onclick = function() {
+        if (!selectedOperation) {
+            if (a != '') {
+                a = Math.pow((+a), 2)
+                a = a.toString()
+                outputElement.innerHTML = a
+            }
+        }
+        else {
+            if (b != '') {
+                b = Math.pow((+b), 2)
+                b = b.toString()
+                outputElement.innerHTML = b
+            }
+        }
+    }
+
+    // Вспомогательная функция факториала
+    function factorial(n) {
+        if (n < 0) return undefined;
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);
+    }
+
+    // Факториал
+    document.getElementById("btn_op_fact").onclick = function() {
+        if (!selectedOperation) {
+            if (a != '') {
+                a = factorial((+a))
+                a = a.toString()
+                outputElement.innerHTML = a
+            }
+        }
+        else {
+            if (b != '') {
+                b = factorial((+b))
+                b = b.toString()
+                outputElement.innerHTML = b
+            }
+        }
+    }
 };
