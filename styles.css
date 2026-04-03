@@ -8,6 +8,28 @@
 html, body {
     height: 100%;
     font-family: "Inter", Arial, sans-serif;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* Заголовки */
+h1 {
+    font-size: 54px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+/* Строчный элемент */
+span {
+    font-size: 18px;
+    color: #5a607f;
 }
 
 /* Основной контейнер */
@@ -64,9 +86,12 @@ nav {
 
 /* Общий контейнер */
 .container {
-    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    max-width: 1200px;
     margin: auto;
-    padding: 0 20px;
+    padding: 40px 50px;
 }
 
 /* Градиент */
@@ -83,25 +108,15 @@ nav {
 .hero {
     flex: 1;
     display: flex;
-}
-
-.hero h1 {
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: #1f2937;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Секция: обо мне */
-.about-hero {
+.about {
     padding: 4rem 0;
     text-align: center;
     border-bottom: 1px solid #e5e7eb;
-}
-
-.about-hero h1 {
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: #1f2937;
 }
 
 .about-content {
@@ -141,6 +156,43 @@ nav {
     margin-bottom: 0.75rem;
     line-height: 1.6;
     color: #4b5563;
+}
+
+/* Секция: карточки */
+.cards {
+    padding: 4rem 0;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.card-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 24px 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #d9e4ff;
+}
+
+.card-title {
+    font-size: 18px;
+    color: #131523;
+    text-align: left;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #5a607f;
+    text-align: left;
 }
 
 /* Секция: калькулятор */
