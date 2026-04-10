@@ -20,7 +20,7 @@ window.onload = function(){
                 // a += digit - это короткая запись a = a + digit - поэтомоу после этой операции a = '145'
 
                 // Запрещаем лидирующие нули
-                if (a === '0' && digit === '0' || a === '' && digit === '0') {
+                if (a === '0' && (digit === '0' || digit === '000') || a === '' && (digit === '0' || digit === '000')) {
                     return
                 }
 
@@ -38,7 +38,7 @@ window.onload = function(){
             if ((digit != '.') || (digit == '.' && !b.includes(digit))) {
 
                 // Запрещаем лидирующие нули
-                if (b === '0' && digit === '0' || b === '' && digit === '0') {
+                if (b === '0' && (digit === '0' || digit === '000') || b === '' && (digit === '0' || digit === '000')) {
                     return
                 }
 
@@ -128,8 +128,8 @@ window.onload = function(){
         outputElement.innerHTML = a
 
         // Разноцветным после результата
-        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-        document.querySelector('.result').style.backgroundColor = randomColor;
+        const hue = Math.random() * 360;
+        document.querySelector('.result').style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
     }
 
     // Смена знака
@@ -229,14 +229,14 @@ window.onload = function(){
     document.getElementById("btn_op_pow").onclick = function() {
         if (!selectedOperation) {
             if (a != '') {
-                a = Math.pow((+a), 2)
+                a = a * a
                 a = a.toString()
                 outputElement.innerHTML = a
             }
         }
         else {
             if (b != '') {
-                b = Math.pow((+b), 2)
+                b = b * b
                 b = b.toString()
                 outputElement.innerHTML = b
             }
@@ -262,6 +262,27 @@ window.onload = function(){
         else {
             if (b != '') {
                 b = factorial((+b))
+                b = b.toString()
+                outputElement.innerHTML = b
+            }
+        }
+    }
+
+    // Сумма цифр
+    document.getElementById("btn_op_sum_digit").onclick = function() {
+        if (!selectedOperation) {
+            if (a != '') {
+                a = a.split('')
+                    .reduce((sum, digit) => sum + Number(digit), 0);
+                a = a.toString()
+                outputElement.innerHTML = a
+            }
+        }
+        else {
+            if (b != '') {
+                alert(b)
+                b = b.split('')
+                    .reduce((sum, digit) => sum + Number(digit), 0);
                 b = b.toString()
                 outputElement.innerHTML = b
             }

@@ -316,5 +316,5 @@ nav {
 
 /* Последний ряд (с кнопкой = шире) */
 .calculator-container .buttons-row:last-child {
-    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
 }
