@@ -1,0 +1,24 @@
+{
+  "name": "iu5c-64b-psp",
+  "version": "1.0.0",
+  "description": "**Дисциплина:** Программирование сетевых приложений",
+  "homepage": "https://github.com/nikita42423/iu5c-64b-psp#readme",
+  "bugs": {
+    "url": "https://github.com/nikita42423/iu5c-64b-psp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikita42423/iu5c-64b-psp.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "node": "^25.9.0"
+  }
+}
