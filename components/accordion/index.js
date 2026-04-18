@@ -1,55 +1,64 @@
 export class AccordionComponent {
-    constructor(parent) {
+    constructor(parent, data) {
         this.parent = parent;
+        this.data = data;
     }
 
-    getHTML(data) {
+    getHTML() {
+        const data = this.data;
+
         return `
-            <div class="accordion" id="accordion-${data.id}">
+            <div class="accordion text-start" id="accordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${data.id}-1">
-                            Характеристики
-                        </button>
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false">
+                        Подробнее
+                    </button>
                     </h2>
-                    <div id="collapse-${data.id}-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-${data.id}">
-                        <div class="accordion-body">
-                            <strong>Вес:</strong> ${data.weight}<br>
-                            <strong>Рост:</strong> ${data.height}<br>
-                            <strong>Продолжительность жизни:</strong> ${data.lifespan}
+
+                    <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                        <div class="accordion-body p-0">
+                            <p class="p-3">Компания: ${data.company}</p>
+
+                            <div class="accordion" id="accordion1">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false">
+                                        Описание
+                                    </button>
+                                    </h2>
+                                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordion1">
+                                    <div class="accordion-body">
+                                        <p>${data.description}</p>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false">
+                                        Функции
+                                    </button>
+                                    </h2>
+                                    <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordion1">
+                                    <div class="accordion-body">
+                                        <ul class="mb-0">
+                                            ${data.features.map(f => `<li>${f}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${data.id}-2">
-                            Особенности породы
-                        </button>
-                    </h2>
-                    <div id="collapse-${data.id}-2" class="accordion-collapse collapse" data-bs-parent="#accordion-${data.id}">
-                        <div class="accordion-body">
-                            ${data.features}
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${data.id}-3">
-                            Интересные факты
-                        </button>
-                    </h2>
-                    <div id="collapse-${data.id}-3" class="accordion-collapse collapse" data-bs-parent="#accordion-${data.id}">
-                        <div class="accordion-body">
-                            ${data.facts}
-                        </div>
-                    </div>
+
                 </div>
             </div>
         `;
     }
 
-    render(data) {
-        const html = this.getHTML(data);
+    render() {
+        const html = this.getHTML();
         this.parent.insertAdjacentHTML('beforeend', html);
     }
 }
