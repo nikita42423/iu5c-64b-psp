@@ -1,3 +1,4 @@
+// components/navbar/index.js
 export class NavbarComponent {
     constructor(parent) {
         this.parent = parent;

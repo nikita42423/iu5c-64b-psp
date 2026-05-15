@@ -1,3 +1,4 @@
+// components/footer/index.js
 export class FooterComponent {
     constructor(parent) {
         this.parent = parent;

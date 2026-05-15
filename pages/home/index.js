@@ -1,3 +1,4 @@
+// pages/home/index.js
 import { NavbarComponent } from "../../components/navbar/index.js";
 import { CardComponent } from "../../components/card/index.js";
 import { FooterComponent } from "../../components/footer/index.js";

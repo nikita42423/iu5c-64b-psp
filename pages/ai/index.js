@@ -1,3 +1,4 @@
+// pages/ai/index.js
 import { NavbarComponent } from "../../components/navbar/index.js";
 import { FooterComponent } from "../../components/footer/index.js";
 import { ButtonBackComponent } from "../../components/button-back/index.js";

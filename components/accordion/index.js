@@ -1,3 +1,4 @@
+// components/accordion/index.js
 export class AccordionComponent {
     constructor(parent, data) {
         this.parent = parent;

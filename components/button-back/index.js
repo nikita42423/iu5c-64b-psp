@@ -1,3 +1,4 @@
+// components/button-back/index.js
 export class ButtonBackComponent {
     constructor(parent) {
         this.parent = parent;

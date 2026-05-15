@@ -1,3 +1,4 @@
+// pages/calculator/index.js
 import { NavbarComponent } from "../../components/navbar/index.js";
 import { FooterComponent } from "../../components/footer/index.js";
 

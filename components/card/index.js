@@ -1,3 +1,4 @@
+// components/card/index.js
 export class CardComponent {
     constructor(parent) {
         this.parent = parent;
