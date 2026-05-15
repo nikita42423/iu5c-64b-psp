@@ -58,7 +58,7 @@ export class CreatePage {
         `;
     }
 
-    clickSubmit(e) {
+    async clickSubmit(e) {
         e.preventDefault();
 
         const title = document.getElementById('input-title').value.trim();
@@ -75,14 +75,13 @@ export class CreatePage {
         if (features.length > 0) data.features = features;
         if (company) data.company = company;
 
-        ajax.post(stockUrls.createStock(), data, (response, status) => {
-            if (status === 201) {
-                window.location.hash = '#home';
-                window.location.reload();
-            } else {
-                alert('Ошибка при создании карточки');
-            }
-        });
+        const { status } = await ajax.post(stockUrls.createStock(), data);
+        if (status === 201) {
+            window.location.hash = '#home';
+            window.location.reload();
+        } else {
+            alert('Ошибка при создании карточки');
+        }
     }
 
     addFormListener() {

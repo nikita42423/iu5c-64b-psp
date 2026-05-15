@@ -15,15 +15,11 @@ export class AIPage {
     }
 
     async getData() {
-        return new Promise((resolve) => {
-            ajax.get(stockUrls.getStockById(this.id), (data, status) => {
-                if (status === 200 && data) {
-                    resolve(data);
-                } else {
-                    resolve(null);
-                }
-            });
-        });
+        const { data, status } = await ajax.get(stockUrls.getStockById(this.id));
+        if (status === 200 && data) {
+            return data;
+        }
+        return null;
     }
 
     getHTML() {
@@ -69,16 +65,15 @@ export class AIPage {
         homePage.render();
     }
 
-    clickDelete() {
+    async clickDelete() {
         if (confirm('Вы уверены, что хотите удалить эту карточку?')) {
-            ajax.delete(stockUrls.removeStockById(this.id), (data, status) => {
-                if (status === 204 || status === 200) {
-                    window.location.hash = '#home';
-                    window.location.reload();
-                } else {
-                    alert('Ошибка при удалении');
-                }
-            });
+            const { status } = await ajax.delete(stockUrls.removeStockById(this.id));
+            if (status === 204 || status === 200) {
+                window.location.hash = '#home';
+                window.location.reload();
+            } else {
+                alert('Ошибка при удалении');
+            }
         }
     }
 

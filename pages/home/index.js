@@ -17,18 +17,16 @@ export class HomePage {
         return document.getElementById('home-page');
     }
 
-    getData(callback) {
+    async getData() {
         let url = stockUrls.getStocks();
         if (this.currentFilter) {
             url += `?title=${encodeURIComponent(this.currentFilter)}`;
         }
-        ajax.get(url, (data, status) => {
-            if (status === 200 && data) {
-                callback(Array.isArray(data) ? data : []);
-            } else {
-                callback([]);
-            }
-        });
+        const { data, status } = await ajax.get(url);
+        if (status === 200 && data) {
+            return Array.isArray(data) ? data : [];
+        }
+        return [];
     }
 
     getHTML() {
@@ -75,26 +73,25 @@ export class HomePage {
         ai.render();
     }
 
-    clickFilter() {
+    async clickFilter() {
         const input = document.getElementById('filter-input');
         this.currentFilter = input.value.trim();
-        this.renderCards();
+        await this.renderCards();
     }
 
-    clickClearFilter() {
+    async clickClearFilter() {
         this.currentFilter = '';
         document.getElementById('filter-input').value = '';
-        this.renderCards();
+        await this.renderCards();
     }
 
-    renderCards() {
+    async renderCards() {
         const cardsContainer = document.getElementById('cards-container');
         cardsContainer.innerHTML = '';
-        this.getData((data) => {
-            data.forEach(item => {
-                const card = new CardComponent(cardsContainer);
-                card.render(item, this.clickCard.bind(this));
-            });
+        const data = await this.getData();
+        data.forEach(item => {
+            const card = new CardComponent(cardsContainer);
+            card.render(item, this.clickCard.bind(this));
         });
     }
 
