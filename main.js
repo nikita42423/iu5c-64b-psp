@@ -1,6 +1,7 @@
 import { HomePage } from "./pages/home/index.js";
 import { AboutPage } from "./pages/about/index.js";
 import { CalculatorPage } from "./pages/calculator/index.js";
+import { CreatePage } from "./pages/create/index.js";
 
 const root = document.getElementById('root');
 
@@ -19,6 +20,10 @@ function router() {
         case '#calculator':
             const calculatorPage = new CalculatorPage(root);
             calculatorPage.render();
+            break;
+        case '#create':
+            const createPage = new CreatePage(root);
+            createPage.render();
             break;
         default:
             const defaultPage = new HomePage(root);

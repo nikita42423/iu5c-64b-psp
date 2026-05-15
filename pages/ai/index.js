@@ -4,8 +4,8 @@ import { FooterComponent } from "../../components/footer/index.js";
 import { ButtonBackComponent } from "../../components/button-back/index.js";
 import { HomePage } from "../home/index.js";
 import { AccordionComponent } from "../../components/accordion/index.js";
-
-const API_BASE = 'http://localhost:5000/api';
+import { ajax } from "../../modules/ajax.js";
+import { stockUrls } from "../../modules/stockUrls.js";
 
 export class AIPage {
     constructor(parent, id) {
@@ -15,14 +15,15 @@ export class AIPage {
     }
 
     async getData() {
-        try {
-            const response = await fetch(`${API_BASE}/ai/${this.id}`);
-            if (!response.ok) return null;
-            return await response.json();
-        } catch (err) {
-            console.error('Ошибка загрузки данных:', err);
-            return null;
-        }
+        return new Promise((resolve) => {
+            ajax.get(stockUrls.getStockById(this.id), (data, status) => {
+                if (status === 200 && data) {
+                    resolve(data);
+                } else {
+                    resolve(null);
+                }
+            });
+        });
     }
 
     getHTML() {
@@ -47,6 +48,7 @@ export class AIPage {
                                         <div class="d-flex justify-content-around align-items-center p-3">
                                             <h1 class="mb-0">${this.data.title}</h1>
                                             <div id="back-button"></div>
+                                            <div id="delete-button-container"></div>
                                         </div>
 
                                         <div class="accordion text-start" id="accordion"></div>
@@ -67,6 +69,31 @@ export class AIPage {
         homePage.render();
     }
 
+    clickDelete() {
+        if (confirm('Вы уверены, что хотите удалить эту карточку?')) {
+            ajax.delete(stockUrls.removeStockById(this.id), (data, status) => {
+                if (status === 204 || status === 200) {
+                    window.location.hash = '#home';
+                    window.location.reload();
+                } else {
+                    alert('Ошибка при удалении');
+                }
+            });
+        }
+    }
+
+    addDeleteButton() {
+        const container = document.getElementById('delete-button-container');
+        if (container) {
+            container.innerHTML = `
+                <button id="delete-btn" class="btn btn-danger">
+                    Удалить
+                </button>
+            `;
+            document.getElementById('delete-btn').addEventListener('click', this.clickDelete.bind(this));
+        }
+    }
+
     async render() {
         this.parent.innerHTML = '';
 
@@ -82,6 +109,8 @@ export class AIPage {
 
         const accordion = new AccordionComponent(this.parent.querySelector('#accordion'), this.data);
         accordion.render();
+
+        this.addDeleteButton();
 
         const footer = new FooterComponent(this.parent);
         footer.render();

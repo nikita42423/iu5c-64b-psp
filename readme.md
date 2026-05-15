@@ -1,4 +1,4 @@
-# Лабораторная работа №4: МаршрутИИ (Frontend + Backend)
+# Лабораторная работа №5: AJAX-запросы к API
 
 **Дисциплина:** Программирование сетевых приложений
 
@@ -9,7 +9,7 @@
 **Семестр:** 6
 
 ## Цель работы
-Создание полноценного веб-приложения с frontend-частью и backend-API на Express.js для управления каталогом нейросетей.
+Взаимодействие с внешним API через XMLHttpRequest (XHR). Получение данных и вывод их в интерфейс пользователя.
 
 ## Структура проекта
 
@@ -17,23 +17,27 @@
 iu5c-64b-psp/
 ├── index.html              # Точка входа frontend
 ├── main.js                 # Клиентский роутер
+├── modules/                # Работа с API
+│   ├── ajax.js             # XMLHttpRequest обёртка
+│   └── stockUrls.js        # URL-адреса API
 ├── src/                    # Backend (Express.js)
 │   ├── index.js            # Точка входа сервера
 │   ├── routes/             # Маршруты API
 │   │   └── ai.js
 │   ├── controllers/        # Обработчики запросов
 │   │   └── aiController.js
-│   ├── services/           # Бизнес-логика
+│   ├── services/          # Бизнес-логика
 │   │   ├── aiService.js
 │   │   └── fileService.js
-│   └── data/               # Хранение данных
+│   └── data/              # Хранение данных
 │       └── ai.json
-├── pages/                  # Страницы frontend
-│   ├── home/               # Главная страница
-│   ├── ai/                 # Страница нейросети
-│   ├── about/              # О проекте
-│   └── calculator/         # Калькулятор
-├── components/             # Компоненты UI
+├── pages/                 # Страницы frontend
+│   ├── home/              # Главная страница (фильтр карточек)
+│   ├── ai/                # Страница нейросети (удаление)
+│   ├── create/            # Создание карточки
+│   ├── about/             # О проекте
+│   └── calculator/        # Калькулятор
+├── components/            # Компоненты UI
 │   ├── navbar/
 │   ├── card/
 │   ├── footer/
@@ -42,40 +46,59 @@ iu5c-64b-psp/
 └── package.json
 ```
 
+## Что такое XMLHttpRequest
+
+[XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) (XHR) позволяет делать HTTP-запросы к серверу из браузера без перезагрузки страницы.
+
+## Модули для работы с API
+
+### modules/ajax.js
+Обёртка над XMLHttpRequest с методами:
+- `get(url, callback)` — GET-запрос
+- `post(url, data, callback)` — POST-запрос
+- `patch(url, data, callback)` — PATCH-запрос
+- `delete(url, callback)` — DELETE-запрос
+
+### modules/stockUrls.js
+Хранит URL-адреса API:
+- `getStocks()` — получить все карточки
+- `getStockById(id)` — получить одну по ID
+- `createStock()` — создать новую
+- `removeStockById(id)` — удалить по ID
+
+## Реализованный функционал
+
+### 1. Фильтрация карточек (главная страница)
+На главной странице добавлено поле ввода и кнопки:
+- **Найти** — фильтрует карточки по названию (query-параметр `?title=...`)
+- **Очистить** — сбрасывает фильтр
+
+### 2. Удаление карточки (страница AI)
+На странице карточки добавлена кнопка **Удалить**:
+- Отправляет DELETE-запрос к API
+- После удаления перенаправляет на главную
+
+### 3. Создание карточки
+Отдельная страница `/pages/create/` с формой:
+- Название (обязательно)
+- URL изображения (обязательно)
+- Описание (обязательно)
+- Ссылка на сайт
+- Функции (через запятую)
+- Компания
+
 ## Backend (Express.js)
-
-### Архитектура (Layered Architecture)
-
-1. **Request** → попадает в `index.js`
-2. **Middleware** → парсинг JSON, CORS, логирование
-3. **Router** (`routes/`) → маршрутизация
-4. **Controller** (`controllers/`) → валидация, вызов сервиса
-5. **Service** (`services/`) → бизнес-логика
-6. **File/Data** → хранение в JSON-файле
 
 ### API Endpoints
 
-| Метод   | Endpoint        | Описание              |
-|---------|-----------------|----------------------|
-| GET     | `/api/ai`       | Получить все нейросети |
-| GET     | `/api/ai/:id`   | Получить одну по ID   |
-| POST    | `/api/ai`       | Создать новую         |
-| PATCH   | `/api/ai/:id`   | Обновить по ID        |
-| DELETE  | `/api/ai/:id`   | Удалить по ID         |
-
-### Структура данных (ai.json)
-
-```json
-{
-  "id": 1,
-  "src": "https://example.com/image.jpg",
-  "title": "ChatGPT",
-  "description": "Большая языковая модель от OpenAI",
-  "features": ["Диалоги", "Генерация текста"],
-  "company": "OpenAI",
-  "link": "https://chat.openai.com"
-}
-```
+| Метод   | Endpoint                  | Описание              |
+|---------|---------------------------|----------------------|
+| GET     | `/api/ai`                 | Получить все нейросети |
+| GET     | `/api/ai?title=...`       | Фильтрация по названию |
+| GET     | `/api/ai/:id`             | Получить одну по ID   |
+| POST    | `/api/ai`                 | Создать новую         |
+| PATCH   | `/api/ai/:id`             | Обновить по ID        |
+| DELETE  | `/api/ai/:id`             | Удалить по ID         |
 
 ## Запуск
 
@@ -86,23 +109,26 @@ npm install
 
 ### Запуск сервера (backend)
 ```bash
-npm run dev
+npm start
 ```
 Сервер запустится на `http://localhost:5000`
 
 ### Запуск frontend
-Откройте `index.html` в браузере или используйте Live Server.
+Откройте `index.html` в браузере или используйте Live Server (порт 5500).
+
+### CORS
+При работе с API может возникнуть ошибка CORS. Для разработки используйте расширение [CORS Unblock](https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino) для Chrome.
 
 ## Технологии
 
-- **Frontend:** HTML5, JavaScript (ES6 Modules), Bootstrap 5
+- **Frontend:** HTML5, JavaScript (ES6 Modules), Bootstrap 5, XMLHttpRequest
 - **Backend:** Node.js, Express.js
-- **Данные:** JSON-файл (в будущем — база данных)
+- **Данные:** JSON-файл
 - **Архитектура:** Layered Architecture, REST API, MVC (frontend)
 
 ## Вывод
-В ходе работы создано полноценное веб-приложение:
-- **Frontend** — SPA с роутингом, компонентным подходом и Bootstrap 5
-- **Backend** — Express.js API с полным CRUD для управления данными
-
-Реализована слоистая архитектура backend, отделяющая маршрутизацию, обработку запросов и бизнес-логику. Данные хранятся в JSON-файле с возможностью расширения до базы данных.
+В ходе работы:
+- Реализована работа с API через XMLHttpRequest
+- Добавлена фильтрация карточек по названию
+- Добавлено удаление карточек
+- Добавлено создание новых карточек

@@ -1,7 +1,11 @@
 const aiService = require('../services/aiService');
 
 const getAllAi = (req, res) => {
-    const ais = aiService.findAll();
+    let ais = aiService.findAll();
+    if (req.query.title) {
+        const filter = req.query.title.toLowerCase();
+        ais = ais.filter(ai => ai.title.toLowerCase().includes(filter));
+    }
     res.json(ais);
 };
 
