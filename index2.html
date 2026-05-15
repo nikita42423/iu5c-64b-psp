@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Gallery (GLB)</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/examples/jsm/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>3D Gallery (GLB)</h1>
+        <form class="upload-form" id="uploadForm">
+            <input type="file" id="fileInput" accept=".glb">
+            <label for="fileInput">Выбрать файл</label>
+        </form>
+    </header>
+
+    <main class="gallery" id="gallery"></main>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
