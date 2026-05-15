@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "src": "https://cdn.fusionchat.ai/blog/chatgpt/new-chatgpt-feature-makes-it-easier-to-find-old-chats-fn7bzrnde8vln7r4y69r.png",
+    "title": "ChatGPT",
+    "description": "ChatGPT — большая языковая модель от OpenAI, разработанная для ведения диалога.",
+    "features": [
+      "Диалоги",
+      "Генерация текста",
+      "Написание кода"
+    ],
+    "company": "OpenAI",
+    "link": "https://chat.openai.com"
+  },
+  {
+    "id": 2,
+    "src": "https://tiku.ru/wp-content/uploads/2025/02/deepseek-ai.jpg",
+    "title": "DeepSeek",
+    "description": "DeepSeek — открытая AI-модель от китайской компании DeepSeek.",
+    "features": [
+      "Анализ кода",
+      "Математика",
+      "Бесплатно"
+    ],
+    "company": "DeepSeek AI",
+    "link": "https://deepseek.com"
+  },
+  {
+    "id": 3,
+    "src": "https://jetstream.blog/wp-content/uploads/2026/02/Google-Gemini-1-1.jpg",
+    "title": "Gemini",
+    "description": "Gemini — мультимодальная AI-модель от Google.",
+    "features": [
+      "Текст",
+      "Изображения",
+      "Видео"
+    ],
+    "company": "Google",
+    "link": "https://gemini.google.com"
+  },
+  {
+    "id": 4,
+    "src": "https://avatars.mds.yandex.net/i?id=fe145cfe704ad47662656df941543783_l-5257754-images-thumbs&n=13",
+    "title": "Claude",
+    "description": "Описание",
+    "link": "https://example.com",
+    "features": [
+      "Функция 1",
+      "Функция 2"
+    ],
+    "company": "Anthropic"
+  }
+]

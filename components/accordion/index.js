@@ -8,6 +8,14 @@ export class AccordionComponent {
     getHTML() {
         const data = this.data;
 
+        if (!data) {
+            return '';
+        }
+
+        const featuresHtml = data.features && data.features.length 
+            ? data.features.map(f => `<li>${f}</li>`).join('')
+            : '<li>Нет данных</li>';
+
         return `
             <div class="accordion text-start" id="accordion">
                 <div class="accordion-item">
@@ -19,7 +27,7 @@ export class AccordionComponent {
 
                     <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordion">
                         <div class="accordion-body p-0">
-                            <p class="p-3">Компания: ${data.company}</p>
+                            <p class="p-3">Компания: ${data.company || 'Неизвестно'}</p>
 
                             <div class="accordion" id="accordion1">
                                 <div class="accordion-item">
@@ -30,7 +38,8 @@ export class AccordionComponent {
                                     </h2>
                                     <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordion1">
                                     <div class="accordion-body">
-                                        <p>${data.description}</p>
+                                        <p>${data.description || 'Нет описания'}</p>
+                                        ${data.link ? `<a href="${data.link}" target="_blank" class="btn btn-primary">Перейти на сайт</a>` : ''}
                                     </div>
                                     </div>
                                 </div>
@@ -43,7 +52,7 @@ export class AccordionComponent {
                                     <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordion1">
                                     <div class="accordion-body">
                                         <ul class="mb-0">
-                                            ${data.features.map(f => `<li>${f}</li>`).join('')}
+                                            ${featuresHtml}
                                         </ul>
                                     </div>
                                     </div>

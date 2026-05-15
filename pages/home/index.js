@@ -4,6 +4,8 @@ import { CardComponent } from "../../components/card/index.js";
 import { FooterComponent } from "../../components/footer/index.js";
 import { AIPage } from "../../pages/ai/index.js";
 
+const API_BASE = 'http://localhost:5000/api';
+
 export class HomePage {
     constructor(parent) {
         this.parent = parent;
@@ -13,24 +15,15 @@ export class HomePage {
         return document.getElementById('home-page');
     }
 
-    getData() {
-        return [
-            {
-                id: 1,
-                src: "https://cdn.fusionchat.ai/blog/chatgpt/new-chatgpt-feature-makes-it-easier-to-find-old-chats-fn7bzrnde8vln7r4y69r.png",
-                title: "ChatGPT",
-            },
-            {
-                id: 2,
-                src: "https://tiku.ru/wp-content/uploads/2025/02/deepseek-ai.jpg",
-                title: "DeepSeek",
-            },
-            {
-                id: 3,
-                src: "https://jetstream.blog/wp-content/uploads/2026/02/Google-Gemini-1-1.jpg",
-                title: "Gemini",
-            }
-        ];
+    async getData() {
+        try {
+            const response = await fetch(`${API_BASE}/ai`);
+            if (!response.ok) throw new Error('Failed to fetch');
+            return await response.json();
+        } catch (err) {
+            console.error('Ошибка загрузки данных:', err);
+            return [];
+        }
     }
 
     getHTML() {
@@ -62,12 +55,11 @@ export class HomePage {
 
     clickCard(e) {
         const cardId = e.currentTarget.dataset.id;
-
         const ai = new AIPage(this.parent, cardId);
         ai.render();
     }
 
-    render() {
+    async render() {
         this.parent.innerHTML = '';
 
         const navbar = new NavbarComponent(this.parent);
@@ -79,7 +71,7 @@ export class HomePage {
         footer.render();
 
         const cardsContainer = document.getElementById('cards-container');
-        const data = this.getData();
+        const data = await this.getData();
         data.forEach(item => {
             const card = new CardComponent(cardsContainer);
             card.render(item, this.clickCard.bind(this));
